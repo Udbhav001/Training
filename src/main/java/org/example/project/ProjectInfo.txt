@@ -1,0 +1,16 @@
+Project Overview:
+
+In this project we were developing an application for removing manual work that client needs to do for order creation. The roles were distributed to supplier, vendors and buyer. So that each can login and update items and place orders according to there needs. This was mainly used for improving the whole manual process to be completed within minutes instead of a day.
+
+Challenges faced:
+1. Validations: On UI all the fields we getting validated, but when the same request is hit from postman it was saving with invalid data as well.
+    Solution: Created custom annotations for validation of user entered input fields, to implement the same set of validation on backend as well.
+
+2. Logging: There was a requirement to desplay logs whenever any method is triggered in controller and service classes. Earlier impl was hardcoded to log the input and output in debug mode.
+	Solution: Removed all the loggings from controller and service classes and created a centrelized logging using AOP. Added pointcuts for @Controller and @Serivce to catch all the methods executed from those classes. This generilized the loggers and gave fesibility in altering logger messages globally.
+
+3. Exception Handling: Requirement was to map the exceptions thrown from the API to a specific DTO with proper HTTP code.
+	Solution: Created centralized exception hadler using AOP to handle commonly thrown exceptions and mapped to custom exception and created a generic exception handler to catch all unhandled exceptions as well.
+
+4. Redundant DB call: There was an API which is called from UI to fetch LOV data (This data comes from MDM (will not change)). For each call the API was hitting DB to fetch the data which was resulting in incresed response time and redundant DB calls.
+	Solution: Implemented caching to enforce single DB call which fetches all the LOV data at once then filter from it and return the response without hitting the DB.
